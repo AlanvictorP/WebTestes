@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/template/templateGeral.xhtml">
+	<ui:define name="metaData">
+		<!-- MetaData para recuperar os param e realizar a pesquisa do cliente selecionado -->
+		<f:metadata>
+			<f:viewParam name="caminhao_cod" value="#{caminhaoBean.codigo}" />
+			<f:viewParam name="caminhao_acao" value="#{caminhaoBean.acao}" />
+			<f:event listener="#{caminhaoBean.carregarCaminhao}"
+				type="preRenderView"></f:event>
+			<f:event listener="#{caminhaoBean.carregarMotoristas}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmCadastroCaminhao">
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Cadastro de Caminhão" />
+				</f:facet>
+			</p:toolbar>
+			<h:panelGrid id="pnlCadastroCaminhao" columns="2">
+
+				<p:outputLabel value="Motorista:" />
+				<p:selectOneMenu value="#{caminhaoBean.caminhaoCadastro.motorista}"
+					converter="motoristaConversao">
+					<f:selectItem itemValue="" itemLabel="Selecione um Motorista." />
+					<f:selectItems value="#{caminhaoBean.listaMotorista}"
+						var="motorista" itemValue="#{motorista}"
+						itemLabel="#{motorista.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Placa:" />
+				<p:inputText maxlength="30" size="15"
+					value="#{caminhaoBean.caminhaoCadastro.placa}"
+					readonly="#{caminhaoBean.acao == 'excluir'}">
+				</p:inputText>
+
+				<p:outputLabel value="Peso:" />
+				<p:inputText maxlength="30" size="15"
+					value="#{caminhaoBean.caminhaoCadastro.pesoMax}"
+					readonly="#{caminhaoBean.acao == 'excluir'}">
+				</p:inputText>
+
+				<p:outputLabel value="Disponivel:" />
+				<p:selectOneRadio id="console" value="#{caminhaoBean.caminhaoCadastro.disponivel}">
+					<f:selectItem itemLabel="Sim" itemValue="true" />
+					<f:selectItem itemLabel="Não" itemValue="false" />
+				</p:selectOneRadio>
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="5">
+				<p:commandButton value="Salvar"
+					actionListener="#{caminhaoBean.salvar}"
+					update=":msgGlobal :frmCadastroCaminhao:pnlCadastroCaminhao"
+					rendered="#{caminhaoBean.acao == 'novo'}" />
+
+				<p:commandButton type="reset" value="Limpar"
+					update=":frmCadastroCaminhao:pnlCadastroCaminhao"
+					rendered="#{caminhaoBean.acao == 'novo'}" />
+
+				<p:commandButton value="Excluir"
+					actionListener="#{caminhaoBean.excluir}" update=":msgGlobal"
+					rendered="#{caminhaoBean.acao == 'excluir'}" />
+
+				<p:commandButton value="Editar"
+					actionListener="#{caminhaoBean.editar}" update=":msgGlobal"
+					rendered="#{caminhaoBean.acao == 'editar'}" />
+
+				<p:commandButton value="Finalizar"
+					actionListener="#{caminhaoBean.finalizar}" update=":msgGlobal"
+					rendered="#{caminhaoBean.acao == 'finalizar'}" />
+
+				<p:button value="Pesquisar"
+					outcome="/paginas/caminhaoPesquisa.xhtml" />
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

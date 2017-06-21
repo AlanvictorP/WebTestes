@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<ui:insert name="metaData" />
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Transportadora</title>
+		<h:outputStylesheet library="css" name="estilos.css" />
+	</h:head>
+	<h:body>
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" header="Transportadora"
+				resizable="false" closable="false" collapsible="false">	
+			</p:layoutUnit>
+	
+			<p:layoutUnit position="south" header="Alanvictor™" resizable="false"
+				closable="false" collapsible="false">	
+			</p:layoutUnit>
+	
+			<p:layoutUnit position="west" size="200" header="Menu"
+				resizable="false" closable="false" collapsible="false">
+	
+			<h:form id="frmMenuPrincipal">
+					<p:panelMenu id="pnlMenuPrincipal">									
+						<p:submenu label="Motorista">
+							<p:menuitem value="Cadastrar"
+								outcome="/paginas/motoristaCadastro.xhtml" >
+								<f:param name="motorista_acao" value="novo" />
+								</p:menuitem>
+							<p:menuitem value="Pesquisar"
+								outcome="/paginas/motoristaPesquisa.xhtml" />
+						</p:submenu>
+						
+						<p:submenu label="Caminhão">
+							<p:menuitem value="Cadastrar"
+								outcome="/paginas/caminhaoCadastro.xhtml">
+								<f:param name="caminhao_acao" value="novo" />
+							</p:menuitem>
+							<p:menuitem value="Pesquisar"
+								outcome="/paginas/caminhaoPesquisa.xhtml" />
+						</p:submenu>	
+						<p:submenu label="Produto">
+							<p:menuitem value="Cadastrar"
+								outcome="/paginas/produtoCadastro.xhtml">
+								<f:param name="produto_acao" value="novo" />
+							</p:menuitem>
+							<p:menuitem value="Pesquisar"
+								outcome="/paginas/produtoPesquisa.xhtml" />
+						</p:submenu>	
+						
+						<p:submenu label="Transportes">
+							<p:menuitem value="Cadastrar" outcome="/paginas/transporte.xhtml"/>
+						</p:submenu>	
+						<p:menuitem value="Sair" url="/j_spring_security_logout"></p:menuitem>						
+					</p:panelMenu>
+					
+				</h:form>
+			</p:layoutUnit>
+	
+	
+			<p:layoutUnit position="center" resizable="false" closable="false"
+				collapsible="false">
+				<p:messages id="msgGlobal" closable="true" />
+				<ui:insert name="conteudo" />
+	
+			</p:layoutUnit>
+		</p:layout>
+	
+	</h:body>
+</html>

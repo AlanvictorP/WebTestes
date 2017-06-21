@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<ui:composition template="/template/templateGeral.xhtml">
+		<ui:define name="metaData">
+			<!-- MetaData para recuperar os param e realizar a pesquisa do cliente selecionado -->
+			<f:metadata>
+				<f:viewParam name="motorista_cod" value="#{motoristaBean.codigo}" />
+				<f:viewParam name="motorista_acao" value="#{motoristaBean.acao}" />
+				<f:event listener="#{motoristaBean.carregarMotorista}"
+					type="preRenderView"></f:event>
+			</f:metadata>
+		</ui:define>
+		<ui:define name="conteudo">
+			<h:form id="frmCadastroCliente">
+				<p:toolbar>
+					<f:facet name="left">
+						<h:outputText value="Cadastro de Motorista" />
+					</f:facet>
+				</p:toolbar>
+				<h:panelGrid id="pnlCadastroCliente" columns="2">
+	
+					<p:outputLabel value="Nome:" />
+					<p:inputText maxlength="50" size="40"
+						value="#{motoristaBean.motoristaCadastro.nome}"
+						readonly="#{motoristaBean.acao == 'excluir'}">
+						<f:validateBean />
+					</p:inputText>
+	
+					<p:outputLabel value="Telefone:" />
+					<p:inputText maxlength="11" size="15"
+						value="#{motoristaBean.motoristaCadastro.telefone}"
+						readonly="#{motoristaBean.acao == 'excluir'}">
+						<f:validateBean />
+					</p:inputText>
+	
+					<p:outputLabel value="Endereço:" />
+					<p:inputText maxlength="100" size="40"
+						value="#{motoristaBean.motoristaCadastro.endereco}"
+						readonly="#{motoristaBean.acao == 'excluir'}">
+						<f:validateBean />
+					</p:inputText>
+	
+					<p:outputLabel value="CPF:" />
+					<p:inputText maxlength="100" size="40"
+						value="#{motoristaBean.motoristaCadastro.cpf}"
+						readonly="#{motoristaBean.acao == 'excluir'}">
+						<f:validateBean />
+					</p:inputText>
+					
+					<p:outputLabel value="PIS:" />
+					<p:inputText maxlength="100" size="40"
+						value="#{motoristaBean.motoristaCadastro.pis}"
+						readonly="#{motoristaBean.acao == 'excluir'}">
+						<f:validateBean />
+					</p:inputText>
+	
+				</h:panelGrid>
+				<h:panelGrid columns="5">
+					<p:commandButton value="Salvar"
+						actionListener="#{motoristaBean.salvar}"
+						update=":msgGlobal :frmCadastroCliente:pnlCadastroCliente"
+						rendered="#{motoristaBean.acao == 'novo'}" />
+	
+					<p:commandButton value="Limpar" type="reset"
+						update=":frmCadastroCliente:pnlCadastroCliente"
+						rendered="#{motoristaBean.acao == 'novo'}" />
+	
+					<p:commandButton value="Excluir"
+						actionListener="#{motoristaBean.excluir}" update=":msgGlobal"
+						rendered="#{motoristaBean.acao == 'excluir'}" />
+	
+					<p:commandButton value="Editar"
+						actionListener="#{motoristaBean.editar}" update=":msgGlobal"
+						rendered="#{motoristaBean.acao == 'editar'}" />
+	
+					<p:button value="Pesquisar" outcome="/paginas/motoristaPesquisa.xhtml"/>
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>
